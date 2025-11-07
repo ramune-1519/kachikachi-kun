@@ -19,62 +19,59 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 3px;
             overflow: hidden;
-            margin: 0;
         }
 
         .container {
             background: #2a2a2a;
-            border-radius: 6px;
-            padding: 3px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 8px;
+            border: 2px solid #444;
             width: 100%;
             height: 100%;
-            border: 1px solid #444;
+            max-width: 920px;
+            max-height: 420px;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            max-width: 932px;
-            max-height: 430px;
         }
 
         .top-section {
             display: flex;
-            gap: 2px;
-            margin-bottom: 2px;
-            align-items: stretch;
+            gap: 8px;
+            margin-bottom: 8px;
+            height: 50px;
             flex-shrink: 0;
-            height: 24px;
         }
 
         .game-info {
             display: flex;
-            gap: 2px;
+            gap: 8px;
             flex: 1;
         }
 
         .info-box {
             background: #1a1a1a;
-            padding: 1px;
-            border-radius: 2px;
-            border: 1px solid #555;
+            padding: 6px;
+            border-radius: 6px;
+            border: 2px solid #555;
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .info-box label {
-            display: block;
             color: #aaa;
-            font-size: 6px;
-            margin-bottom: 0;
+            font-size: 10px;
+            margin-bottom: 4px;
         }
 
         .info-box input {
             width: 100%;
-            padding: 0;
-            font-size: 8px;
-            border: 1px solid #555;
-            border-radius: 2px;
+            padding: 4px;
+            font-size: 14px;
+            border: 2px solid #555;
+            border-radius: 4px;
             background: #333;
             color: #fff;
             text-align: center;
@@ -87,9 +84,9 @@
 
         .total-games {
             background: #1a1a1a;
-            padding: 1px 4px;
-            border-radius: 2px;
-            border: 1px solid #555;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 2px solid #555;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -98,35 +95,31 @@
 
         .total-games .label {
             color: #aaa;
-            font-size: 6px;
-            margin-bottom: 0;
+            font-size: 10px;
+            margin-bottom: 4px;
         }
 
         .total-games .value {
             color: #ffd700;
-            font-size: 9px;
+            font-size: 16px;
             font-weight: bold;
         }
 
         .counters-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
-            width: 100%;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 8px;
             flex: 1;
-            align-content: start;
         }
 
-        .counter-item {
+        .counter-item, .action-item {
             background: #1a1a1a;
-            border: 1px solid #555;
-            border-radius: 2px;
-            padding: 1px;
-            transition: all 0.2s;
+            border: 2px solid #555;
+            border-radius: 6px;
+            padding: 6px;
             display: flex;
             flex-direction: column;
-            width: 100%;
-            aspect-ratio: 1 / 1;
         }
 
         .counter-item.highlighted-green {
@@ -145,52 +138,44 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0;
-            flex-shrink: 0;
+            margin-bottom: 4px;
         }
 
         .counter-name {
             color: #fff;
-            font-size: 5px;
+            font-size: 11px;
             font-weight: bold;
         }
 
         .counter-value {
             color: #ffd700;
-            font-size: 7px;
+            font-size: 14px;
             font-weight: bold;
         }
 
         .counter-probability {
             color: #aaa;
-            font-size: 4px;
-            margin-bottom: 0;
-            flex-shrink: 0;
+            font-size: 9px;
+            margin-bottom: 4px;
         }
 
         .counter-buttons {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1px;
+            display: flex;
+            gap: 4px;
             flex: 1;
-            min-height: 0;
         }
 
         .btn-add {
-            padding: 0;
-            font-size: 6px;
+            flex: 2;
+            font-size: 14px;
             font-weight: bold;
             border: none;
-            border-radius: 1px;
+            border-radius: 4px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
             cursor: pointer;
             transition: all 0.1s;
-            box-shadow: 0 1px 1px rgba(102, 126, 234, 0.4);
             touch-action: manipulation;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .btn-add:active {
@@ -198,20 +183,16 @@
         }
 
         .btn-subtract {
-            padding: 0;
-            font-size: 5px;
+            flex: 1;
+            font-size: 12px;
             font-weight: bold;
             border: none;
-            border-radius: 1px;
+            border-radius: 4px;
             background: #d9534f;
             color: #fff;
             cursor: pointer;
             transition: all 0.1s;
-            box-shadow: 0 1px 1px rgba(217, 83, 79, 0.4);
             touch-action: manipulation;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .btn-subtract:active {
@@ -219,34 +200,26 @@
         }
 
         .action-item {
-            background: #1a1a1a;
-            border: 1px solid #555;
-            border-radius: 2px;
-            padding: 1px;
-            aspect-ratio: 1 / 1;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100%;
         }
 
-        .reset-button {
+        .reset-button, .settings-button {
             width: 100%;
             height: 100%;
-            padding: 0;
-            font-size: 5px;
+            font-size: 12px;
             font-weight: bold;
             border: none;
-            border-radius: 1px;
-            background: #555;
+            border-radius: 4px;
             color: #fff;
             cursor: pointer;
             transition: all 0.1s;
             touch-action: manipulation;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        }
+
+        .reset-button {
+            background: #555;
         }
 
         .reset-button:active {
@@ -255,33 +228,11 @@
         }
 
         .settings-button {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            font-size: 5px;
-            font-weight: bold;
-            border: none;
-            border-radius: 1px;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.1s;
-            touch-action: manipulation;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .settings-button:active {
             transform: scale(0.95);
-        }
-
-        /* 横画面モード - iPhone 15 最適化 */
-        @media (orientation: landscape) {
-            .container {
-                max-width: 932px;
-                max-height: 430px;
-            }
         }
 
         /* 縦画面モード */
@@ -293,35 +244,35 @@
 
             .counters-grid {
                 grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(5, 1fr);
+                grid-template-rows: auto;
             }
 
             .top-section {
-                height: 50px;
+                height: 60px;
             }
 
             .counter-name {
-                font-size: 11px;
+                font-size: 13px;
             }
 
             .counter-value {
-                font-size: 14px;
+                font-size: 16px;
             }
 
             .counter-probability {
-                font-size: 9px;
+                font-size: 11px;
             }
 
             .btn-add {
-                font-size: 12px;
+                font-size: 16px;
             }
 
             .btn-subtract {
-                font-size: 11px;
+                font-size: 14px;
             }
 
             .reset-button, .settings-button {
-                font-size: 11px;
+                font-size: 14px;
             }
         }
     </style>
