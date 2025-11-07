@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>かちかちくん - 子役カウンター</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: #2a2a2a;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            max-width: 100%;
+            width: 100%;
+            border: 3px solid #444;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .header {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #444;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .top-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: stretch;
+        }
+
+        .game-info {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .info-box {
+            background: #1a1a1a;
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid #555;
+            flex: 1;
+        }
+
+        .info-box label {
+            display: block;
+            color: #aaa;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .info-box input {
+            width: 100%;
+            padding: 6px;
+            font-size: 16px;
+            border: 2px solid #555;
+            border-radius: 5px;
+            background: #333;
+            color: #fff;
+            text-align: center;
+        }
+
+        .info-box input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .total-games {
+            background: #1a1a1a;
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 2px solid #555;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .total-games .label {
+            color: #aaa;
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+        .total-games .value {
+            color: #ffd700;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .counters-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .counter-item {
+            background: #1a1a1a;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 8px;
+            transition: transform 0.1s;
+        }
+
+        .counter-item:active {
+            transform: scale(0.98);
+        }
+
+        .counter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .counter-name {
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .counter-value {
+            color: #ffd700;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .counter-probability {
+            color: #aaa;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+
+        .counter-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-add {
+            flex: 2;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
+            touch-action: manipulation;
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-add:active {
+            transform: translateY(0);
+        }
+
+        .btn-subtract {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            background: #d9534f;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4);
+            touch-action: manipulation;
+        }
+
+        .btn-subtract:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(217, 83, 79, 0.6);
+        }
+
+        .btn-subtract:active {
+            transform: translateY(0);
+        }
+
+        .reset-button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: #555;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+
+        .reset-button:hover {
+            background: #666;
+        }
+
+        /* iPhone 15横画面対応 (landscape) */
+        @media (max-width: 932px) and (orientation: landscape) {
+            body {
+                padding: 5px;
+            }
+
+            .container {
+                padding: 10px;
+                border-radius: 10px;
+                max-height: 100vh;
+            }
+
+            .header h1 {
+                font-size: 16px;
+                margin-bottom: 3px;
+            }
+
+            .header p {
+                font-size: 11px;
+            }
+
+            .header {
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+            }
+
+            .top-section {
+                margin-bottom: 10px;
+            }
+
+            .counters-grid {
+                gap: 8px;
+                margin-bottom: 10px;
+            }
+
+            .counter-item {
+                padding: 6px;
+            }
+
+            .counter-name {
+                font-size: 11px;
+            }
+
+            .counter-value {
+                font-size: 16px;
+            }
+
+            .counter-probability {
+                font-size: 10px;
+                margin-bottom: 6px;
+            }
+
+            .btn-add, .btn-subtract {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .reset-button {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .info-box label, .total-games .label {
+                font-size: 10px;
+            }
+
+            .info-box input {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .total-games .value {
+                font-size: 16px;
+            }
+        }
+
+        /* 縦画面モード */
+        @media (orientation: portrait) {
+            .counters-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>かちかちくん</h1>
+            <p style="color: #aaa;">子役カウンター</p>
+        </div>
+
+        <div class="top-section">
+            <div class="game-info">
+                <div class="info-box">
+                    <label>開始ゲーム数</label>
+                    <input type="number" id="startGame" value="0" min="0">
+                </div>
+                <div class="info-box">
+                    <label>現在のゲーム数</label>
+                    <input type="number" id="currentGame" value="0" min="0">
+                </div>
+            </div>
+            <div class="total-games">
+                <div class="label">総ゲーム数</div>
+                <div class="value" id="totalGames">0</div>
+            </div>
+        </div>
+
+        <div class="counters-grid" id="countersGrid">
+            <!-- カウンターアイテムはJavaScriptで生成 -->
+        </div>
+
+        <button class="reset-button" onclick="resetAll()">リセット</button>
+    </div>
+
+    <script>
+        // 子役の名前を定義
+        const roles = [
+            'チェリー',
+            'ブドウ',
+            '単独REG',
+            'チェリーREG',
+            '単独BIG',
+            'チェリーBIG',
+            'レアチェリーBIG'
+        ];
+
+        // カウンターデータを初期化
+        let counters = {};
+        roles.forEach(role => {
+            counters[role] = 0;
+        });
+
+        // ページ読み込み時に初期化
+        window.onload = function() {
+            initializeCounters();
+            updateTotalGames();
+            loadFromLocalStorage();
+        };
+
+        // カウンターUIを初期化
+        function initializeCounters() {
+            const grid = document.getElementById('countersGrid');
+            grid.innerHTML = '';
+
+            roles.forEach(role => {
+                const counterItem = document.createElement('div');
+                counterItem.className = 'counter-item';
+                counterItem.innerHTML = `
+                    <div class="counter-header">
+                        <span class="counter-name">${role}</span>
+                        <span class="counter-value" id="count-${role}">0</span>
+                    </div>
+                    <div class="counter-probability" id="prob-${role}">確率: 1/0</div>
+                    <div class="counter-buttons">
+                        <button class="btn-add" onclick="increment('${role}')">+1</button>
+                        <button class="btn-subtract" onclick="decrement('${role}')">-1</button>
+                    </div>
+                `;
+                grid.appendChild(counterItem);
+            });
+        }
+
+        // カウントを増やす
+        function increment(role) {
+            counters[role]++;
+            updateDisplay();
+            saveToLocalStorage();
+        }
+
+        // カウントを減らす
+        function decrement(role) {
+            if (counters[role] > 0) {
+                counters[role]--;
+                updateDisplay();
+                saveToLocalStorage();
+            }
+        }
+
+        // 総ゲーム数を更新
+        function updateTotalGames() {
+            const startGame = parseInt(document.getElementById('startGame').value) || 0;
+            const currentGame = parseInt(document.getElementById('currentGame').value) || 0;
+            const totalGames = currentGame - startGame;
+            document.getElementById('totalGames').textContent = totalGames > 0 ? totalGames : 0;
+            updateDisplay();
+        }
+
+        // 表示を更新
+        function updateDisplay() {
+            const startGame = parseInt(document.getElementById('startGame').value) || 0;
+            const currentGame = parseInt(document.getElementById('currentGame').value) || 0;
+            const totalGames = currentGame - startGame;
+
+            roles.forEach(role => {
+                const count = counters[role];
+                document.getElementById(`count-${role}`).textContent = count;
+
+                let probability = '1/0';
+                if (count > 0 && totalGames > 0) {
+                    const prob = (totalGames / count).toFixed(2);
+                    probability = `1/${prob}`;
+                } else if (totalGames > 0) {
+                    probability = `1/${totalGames}`;
+                }
+                document.getElementById(`prob-${role}`).textContent = `確率: ${probability}`;
+            });
+        }
+
+        // 全てをリセット
+        function resetAll() {
+            if (confirm('全てのデータをリセットしますか?')) {
+                roles.forEach(role => {
+                    counters[role] = 0;
+                });
+                document.getElementById('startGame').value = 0;
+                document.getElementById('currentGame').value = 0;
+                updateTotalGames();
+                updateDisplay();
+                saveToLocalStorage();
+            }
+        }
+
+        // ローカルストレージに保存
+        function saveToLocalStorage() {
+            const data = {
+                counters: counters,
+                startGame: document.getElementById('startGame').value,
+                currentGame: document.getElementById('currentGame').value
+            };
+            localStorage.setItem('kachikachi-kun-data', JSON.stringify(data));
+        }
+
+        // ローカルストレージから読み込み
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('kachikachi-kun-data');
+            if (saved) {
+                const data = JSON.parse(saved);
+                counters = data.counters || counters;
+                document.getElementById('startGame').value = data.startGame || 0;
+                document.getElementById('currentGame').value = data.currentGame || 0;
+                updateTotalGames();
+                updateDisplay();
+            }
+        }
+
+        // ゲーム数入力時のイベントリスナー
+        document.getElementById('startGame').addEventListener('input', function() {
+            updateTotalGames();
+            saveToLocalStorage();
+        });
+
+        document.getElementById('currentGame').addEventListener('input', function() {
+            updateTotalGames();
+            saveToLocalStorage();
+        });
+    </script>
+</body>
+</html>
