@@ -26,12 +26,12 @@
 
         .container {
             background: #2a2a2a;
-            border-radius: 8px;
-            padding: 5px;
+            border-radius: 6px;
+            padding: 3px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             width: 100%;
             height: 100%;
-            border: 2px solid #444;
+            border: 1px solid #444;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -41,23 +41,23 @@
 
         .top-section {
             display: flex;
-            gap: 4px;
-            margin-bottom: 4px;
+            gap: 2px;
+            margin-bottom: 2px;
             align-items: stretch;
             flex-shrink: 0;
-            height: 32px;
+            height: 24px;
         }
 
         .game-info {
             display: flex;
-            gap: 4px;
+            gap: 2px;
             flex: 1;
         }
 
         .info-box {
             background: #1a1a1a;
-            padding: 2px;
-            border-radius: 3px;
+            padding: 1px;
+            border-radius: 2px;
             border: 1px solid #555;
             flex: 1;
         }
@@ -65,14 +65,14 @@
         .info-box label {
             display: block;
             color: #aaa;
-            font-size: 7px;
-            margin-bottom: 1px;
+            font-size: 6px;
+            margin-bottom: 0;
         }
 
         .info-box input {
             width: 100%;
-            padding: 1px;
-            font-size: 10px;
+            padding: 0;
+            font-size: 8px;
             border: 1px solid #555;
             border-radius: 2px;
             background: #333;
@@ -87,8 +87,8 @@
 
         .total-games {
             background: #1a1a1a;
-            padding: 2px 6px;
-            border-radius: 3px;
+            padding: 1px 4px;
+            border-radius: 2px;
             border: 1px solid #555;
             text-align: center;
             display: flex;
@@ -98,20 +98,20 @@
 
         .total-games .label {
             color: #aaa;
-            font-size: 7px;
+            font-size: 6px;
             margin-bottom: 0;
         }
 
         .total-games .value {
             color: #ffd700;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: bold;
         }
 
         .counters-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 3px;
+            gap: 2px;
             width: 100%;
             flex: 1;
             align-content: start;
@@ -120,8 +120,8 @@
         .counter-item {
             background: #1a1a1a;
             border: 1px solid #555;
-            border-radius: 3px;
-            padding: 2px;
+            border-radius: 2px;
+            padding: 1px;
             transition: all 0.2s;
             display: flex;
             flex-direction: column;
@@ -151,19 +151,19 @@
 
         .counter-name {
             color: #fff;
-            font-size: 6px;
+            font-size: 5px;
             font-weight: bold;
         }
 
         .counter-value {
             color: #ffd700;
-            font-size: 9px;
+            font-size: 7px;
             font-weight: bold;
         }
 
         .counter-probability {
             color: #aaa;
-            font-size: 5px;
+            font-size: 4px;
             margin-bottom: 0;
             flex-shrink: 0;
         }
@@ -178,15 +178,15 @@
 
         .btn-add {
             padding: 0;
-            font-size: 8px;
+            font-size: 6px;
             font-weight: bold;
             border: none;
-            border-radius: 2px;
+            border-radius: 1px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
             cursor: pointer;
             transition: all 0.1s;
-            box-shadow: 0 1px 2px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 1px 1px rgba(102, 126, 234, 0.4);
             touch-action: manipulation;
             display: flex;
             align-items: center;
@@ -199,15 +199,15 @@
 
         .btn-subtract {
             padding: 0;
-            font-size: 7px;
+            font-size: 5px;
             font-weight: bold;
             border: none;
-            border-radius: 2px;
+            border-radius: 1px;
             background: #d9534f;
             color: #fff;
             cursor: pointer;
             transition: all 0.1s;
-            box-shadow: 0 1px 2px rgba(217, 83, 79, 0.4);
+            box-shadow: 0 1px 1px rgba(217, 83, 79, 0.4);
             touch-action: manipulation;
             display: flex;
             align-items: center;
@@ -221,8 +221,8 @@
         .action-item {
             background: #1a1a1a;
             border: 1px solid #555;
-            border-radius: 3px;
-            padding: 2px;
+            border-radius: 2px;
+            padding: 1px;
             aspect-ratio: 1 / 1;
             display: flex;
             flex-direction: column;
@@ -235,10 +235,10 @@
             width: 100%;
             height: 100%;
             padding: 0;
-            font-size: 7px;
+            font-size: 5px;
             font-weight: bold;
             border: none;
-            border-radius: 2px;
+            border-radius: 1px;
             background: #555;
             color: #fff;
             cursor: pointer;
@@ -258,10 +258,10 @@
             width: 100%;
             height: 100%;
             padding: 0;
-            font-size: 7px;
+            font-size: 5px;
             font-weight: bold;
             border: none;
-            border-radius: 2px;
+            border-radius: 1px;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: #fff;
             cursor: pointer;
