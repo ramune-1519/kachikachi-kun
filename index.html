@@ -128,11 +128,22 @@
             border: 2px solid #555;
             border-radius: 8px;
             padding: 8px;
-            transition: transform 0.1s;
+            transition: all 0.2s;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
         }
 
-        .counter-item:active {
-            transform: scale(0.98);
+        .counter-item.highlighted-green {
+            background: #2a4a2a;
+            border-color: #4CAF50;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.6);
+        }
+
+        .counter-item.highlighted-red {
+            background: #4a2a2a;
+            border-color: #f44336;
+            box-shadow: 0 0 15px rgba(244, 67, 54, 0.6);
         }
 
         .counter-header {
@@ -161,13 +172,14 @@
         }
 
         .counter-buttons {
-            display: flex;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
             gap: 5px;
+            flex: 1;
         }
 
         .btn-add {
-            flex: 2;
-            padding: 10px;
+            padding: 0;
             font-size: 16px;
             font-weight: bold;
             border: none;
@@ -175,84 +187,94 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.1s;
             box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
             touch-action: manipulation;
-        }
-
-        .btn-add:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-add:active {
-            transform: translateY(0);
+            transform: scale(0.95);
         }
 
         .btn-subtract {
-            flex: 1;
-            padding: 10px;
-            font-size: 16px;
+            padding: 0;
+            font-size: 14px;
             font-weight: bold;
             border: none;
             border-radius: 6px;
             background: #d9534f;
             color: #fff;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.1s;
             box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4);
             touch-action: manipulation;
-        }
-
-        .btn-subtract:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(217, 83, 79, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-subtract:active {
-            transform: translateY(0);
+            transform: scale(0.95);
+        }
+
+        .action-item {
+            background: #1a1a1a;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 8px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .reset-button {
             width: 100%;
-            padding: 12px;
-            font-size: 16px;
+            height: 100%;
+            padding: 0;
+            font-size: 14px;
             font-weight: bold;
             border: none;
             border-radius: 8px;
             background: #555;
             color: #fff;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.1s;
             touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .reset-button:hover {
+        .reset-button:active {
             background: #666;
+            transform: scale(0.95);
         }
 
         .settings-button {
             width: 100%;
-            padding: 12px;
-            font-size: 16px;
+            height: 100%;
+            padding: 0;
+            font-size: 14px;
             font-weight: bold;
             border: none;
             border-radius: 8px;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: #fff;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.1s;
             touch-action: manipulation;
-            margin-top: 10px;
-        }
-
-        .settings-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(245, 87, 108, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .settings-button:active {
-            transform: translateY(0);
+            transform: scale(0.95);
         }
 
         /* iPhone 15横画面対応 (landscape) */
@@ -361,9 +383,6 @@
         <div class="counters-grid" id="countersGrid">
             <!-- カウンターアイテムはJavaScriptで生成 -->
         </div>
-
-        <button class="reset-button" onclick="resetAll()">リセット</button>
-        <button class="settings-button" onclick="goToMachineSelect()">設定推測</button>
     </div>
 
     <script>
@@ -399,6 +418,7 @@
             roles.forEach(role => {
                 const counterItem = document.createElement('div');
                 counterItem.className = 'counter-item';
+                counterItem.id = `item-${role}`;
                 counterItem.innerHTML = `
                     <div class="counter-header">
                         <span class="counter-name">${role}</span>
@@ -412,11 +432,39 @@
                 `;
                 grid.appendChild(counterItem);
             });
+
+            // リセットボタンと設定推測ボタンを追加
+            const resetItem = document.createElement('div');
+            resetItem.className = 'action-item';
+            resetItem.innerHTML = '<button class="reset-button" onclick="resetAll()">リセット</button>';
+            grid.appendChild(resetItem);
+
+            const settingsItem = document.createElement('div');
+            settingsItem.className = 'action-item';
+            settingsItem.innerHTML = '<button class="settings-button" onclick="goToMachineSelect()">設定推測</button>';
+            grid.appendChild(settingsItem);
+        }
+
+        // ハイライトエフェクト
+        function highlightCounter(role, type) {
+            const item = document.getElementById(`item-${role}`);
+            const className = type === 'add' ? 'highlighted-green' : 'highlighted-red';
+            item.classList.add(className);
+
+            // バイブレーション（スマホのみ）
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+
+            setTimeout(() => {
+                item.classList.remove(className);
+            }, 200);
         }
 
         // カウントを増やす
         function increment(role) {
             counters[role]++;
+            highlightCounter(role, 'add');
             updateDisplay();
             saveToLocalStorage();
         }
@@ -425,6 +473,7 @@
         function decrement(role) {
             if (counters[role] > 0) {
                 counters[role]--;
+                highlightCounter(role, 'subtract');
                 updateDisplay();
                 saveToLocalStorage();
             }
