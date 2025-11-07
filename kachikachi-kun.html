@@ -231,30 +231,6 @@
             background: #666;
         }
 
-        .settings-button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.2s;
-            touch-action: manipulation;
-            margin-top: 10px;
-        }
-
-        .settings-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(245, 87, 108, 0.6);
-        }
-
-        .settings-button:active {
-            transform: translateY(0);
-        }
-
         /* iPhone 15横画面対応 (landscape) */
         @media (max-width: 932px) and (orientation: landscape) {
             body {
@@ -363,7 +339,6 @@
         </div>
 
         <button class="reset-button" onclick="resetAll()">リセット</button>
-        <button class="settings-button" onclick="goToMachineSelect()">設定推測</button>
     </div>
 
     <script>
@@ -507,11 +482,6 @@
             updateTotalGames();
             saveToLocalStorage();
         });
-
-        // 機種選択ページへ遷移
-        function goToMachineSelect() {
-            window.location.href = 'machine-select.html';
-        }
     </script>
 </body>
 </html>

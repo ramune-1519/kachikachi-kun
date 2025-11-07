@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>機種選択 - かちかちくん</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #2a2a2a;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            max-width: 800px;
+            width: 100%;
+            border: 3px solid #444;
+        }
+
+        .header {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #444;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .machine-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .machine-item {
+            background: #1a1a1a;
+            border: 2px solid #555;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+
+        .machine-item:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .machine-item:active {
+            transform: scale(0.98);
+        }
+
+        .machine-name {
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .back-button {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background: #555;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+
+        .back-button:hover {
+            background: #666;
+            transform: translateY(-2px);
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .machine-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>機種選択</h1>
+            <p>設定推測する機種を選んでください</p>
+        </div>
+
+        <div class="machine-grid">
+            <div class="machine-item" onclick="goToEstimation('my-juggler')">
+                <div class="machine-name">マイジャグラーV</div>
+            </div>
+            <div class="machine-item" onclick="goToEstimation('gogo-juggler')">
+                <div class="machine-name">ゴーゴージャグラー３</div>
+            </div>
+            <div class="machine-item" onclick="goToEstimation('neo-aim-juggler')">
+                <div class="machine-name">ネオアイムジャグラーEX</div>
+            </div>
+            <div class="machine-item" onclick="goToEstimation('ultra-miracle-juggler')">
+                <div class="machine-name">ウルトラミラクルジャグラー</div>
+            </div>
+            <div class="machine-item" onclick="goToEstimation('mr-juggler')">
+                <div class="machine-name">ミスタージャグラー</div>
+            </div>
+            <div class="machine-item" onclick="goToEstimation('funky-juggler')">
+                <div class="machine-name">ファンキージャグラー２</div>
+            </div>
+            <div class="machine-item" onclick="goToEstimation('happy-juggler')">
+                <div class="machine-name">ハッピージャグラーV</div>
+            </div>
+            <div class="machine-item" onclick="goToEstimation('juggler-girls')">
+                <div class="machine-name">ジャグラーガールズSS</div>
+            </div>
+        </div>
+
+        <button class="back-button" onclick="goBack()">戻る</button>
+    </div>
+
+    <script>
+        function goToEstimation(machine) {
+            window.location.href = `estimation-${machine}.html`;
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
