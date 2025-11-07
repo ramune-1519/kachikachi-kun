@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>かちかちくん</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>かちかちくん - 子役カウンター</title>
     <style>
         * {
             margin: 0;
@@ -14,48 +14,73 @@
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            overflow: hidden;
-            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow-x: hidden;
         }
 
         .container {
             background: #2a2a2a;
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            flex-direction: column;
-            padding: 8px;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            max-width: 100%;
+            width: 100%;
+            border: 3px solid #444;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .header {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #444;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 5px;
         }
 
         .top-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 8px;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: stretch;
+        }
+
+        .game-info {
+            display: flex;
+            gap: 10px;
+            flex: 1;
         }
 
         .info-box {
             background: #1a1a1a;
-            padding: 6px;
+            padding: 8px;
             border-radius: 8px;
             border: 2px solid #555;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            flex: 1;
         }
 
         .info-box label {
+            display: block;
             color: #aaa;
-            font-size: 9px;
-            margin-bottom: 3px;
+            font-size: 11px;
+            margin-bottom: 5px;
         }
 
         .info-box input {
             width: 100%;
-            padding: 4px;
-            font-size: 14px;
+            padding: 6px;
+            font-size: 16px;
             border: 2px solid #555;
             border-radius: 5px;
             background: #333;
@@ -70,7 +95,7 @@
 
         .total-games {
             background: #1a1a1a;
-            padding: 6px;
+            padding: 8px 15px;
             border-radius: 8px;
             border: 2px solid #555;
             text-align: center;
@@ -81,181 +106,232 @@
 
         .total-games .label {
             color: #aaa;
-            font-size: 9px;
-            margin-bottom: 2px;
+            font-size: 11px;
+            margin-bottom: 3px;
         }
 
         .total-games .value {
             color: #ffd700;
-            font-size: 16px;
+            font-size: 20px;
             font-weight: bold;
         }
 
-        .main-content {
-            flex: 1;
-            display: flex;
-            gap: 8px;
-            min-height: 0;
-        }
-
         .counters-grid {
-            flex: 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 6px;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .counter-item {
             background: #1a1a1a;
             border: 2px solid #555;
             border-radius: 8px;
-            padding: 4px;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.1s;
-            position: relative;
+            padding: 8px;
+            transition: transform 0.1s;
         }
 
-        .counter-item.highlighted {
-            background: #2a4a2a;
-            border-color: #4CAF50;
-            box-shadow: 0 0 15px rgba(76, 175, 80, 0.6);
+        .counter-item:active {
+            transform: scale(0.98);
         }
 
         .counter-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3px;
+            margin-bottom: 5px;
         }
 
         .counter-name {
             color: #fff;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
         }
 
         .counter-value {
             color: #ffd700;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
         }
 
         .counter-probability {
             color: #aaa;
-            font-size: 9px;
-            margin-bottom: 4px;
-            text-align: center;
+            font-size: 11px;
+            margin-bottom: 8px;
         }
 
         .counter-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 3px;
-            flex: 1;
+            display: flex;
+            gap: 5px;
         }
 
         .btn-add {
-            grid-column: 1 / 3;
-            padding: 0;
-            font-size: 14px;
+            flex: 2;
+            padding: 10px;
+            font-size: 16px;
             font-weight: bold;
             border: none;
             border-radius: 6px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
             cursor: pointer;
-            transition: all 0.1s;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
             touch-action: manipulation;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.6);
         }
 
         .btn-add:active {
-            transform: scale(0.95);
-            box-shadow: 0 1px 4px rgba(102, 126, 234, 0.6);
+            transform: translateY(0);
         }
 
         .btn-subtract {
-            padding: 0;
-            font-size: 12px;
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
             font-weight: bold;
             border: none;
             border-radius: 6px;
             background: #d9534f;
             color: #fff;
             cursor: pointer;
-            transition: all 0.1s;
-            box-shadow: 0 2px 8px rgba(217, 83, 79, 0.4);
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4);
             touch-action: manipulation;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        }
+
+        .btn-subtract:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(217, 83, 79, 0.6);
         }
 
         .btn-subtract:active {
-            transform: scale(0.95);
-            box-shadow: 0 1px 4px rgba(217, 83, 79, 0.6);
-        }
-
-        .side-panel {
-            width: 80px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            transform: translateY(0);
         }
 
         .reset-button {
-            flex: 1;
-            padding: 8px;
-            font-size: 14px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
             font-weight: bold;
             border: none;
             border-radius: 8px;
             background: #555;
             color: #fff;
             cursor: pointer;
-            transition: all 0.1s;
+            transition: all 0.2s;
             touch-action: manipulation;
         }
 
-        .reset-button:active {
-            transform: scale(0.95);
+        .reset-button:hover {
             background: #666;
+        }
+
+        /* iPhone 15横画面対応 (landscape) */
+        @media (max-width: 932px) and (orientation: landscape) {
+            body {
+                padding: 5px;
+            }
+
+            .container {
+                padding: 10px;
+                border-radius: 10px;
+                max-height: 100vh;
+            }
+
+            .header h1 {
+                font-size: 16px;
+                margin-bottom: 3px;
+            }
+
+            .header p {
+                font-size: 11px;
+            }
+
+            .header {
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+            }
+
+            .top-section {
+                margin-bottom: 10px;
+            }
+
+            .counters-grid {
+                gap: 8px;
+                margin-bottom: 10px;
+            }
+
+            .counter-item {
+                padding: 6px;
+            }
+
+            .counter-name {
+                font-size: 11px;
+            }
+
+            .counter-value {
+                font-size: 16px;
+            }
+
+            .counter-probability {
+                font-size: 10px;
+                margin-bottom: 6px;
+            }
+
+            .btn-add, .btn-subtract {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .reset-button {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .info-box label, .total-games .label {
+                font-size: 10px;
+            }
+
+            .info-box input {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .total-games .value {
+                font-size: 16px;
+            }
         }
 
         /* 縦画面モード */
         @media (orientation: portrait) {
             .counters-grid {
                 grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: auto;
-            }
-
-            .side-panel {
-                width: 100%;
-                flex-direction: row;
-            }
-
-            .main-content {
-                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="header">
+            <h1>かちかちくん</h1>
+            <p style="color: #aaa;">子役カウンター</p>
+        </div>
+
         <div class="top-section">
-            <div class="info-box">
-                <label>開始ゲーム数</label>
-                <input type="number" id="startGame" value="0" min="0" inputmode="numeric">
-            </div>
-            <div class="info-box">
-                <label>現在のゲーム数</label>
-                <input type="number" id="currentGame" value="0" min="0" inputmode="numeric">
+            <div class="game-info">
+                <div class="info-box">
+                    <label>開始ゲーム数</label>
+                    <input type="number" id="startGame" value="0" min="0">
+                </div>
+                <div class="info-box">
+                    <label>現在のゲーム数</label>
+                    <input type="number" id="currentGame" value="0" min="0">
+                </div>
             </div>
             <div class="total-games">
                 <div class="label">総ゲーム数</div>
@@ -263,14 +339,11 @@
             </div>
         </div>
 
-        <div class="main-content">
-            <div class="counters-grid" id="countersGrid">
-                <!-- カウンターアイテムはJavaScriptで生成 -->
-            </div>
-            <div class="side-panel">
-                <button class="reset-button" onclick="resetAll()">リセット</button>
-            </div>
+        <div class="counters-grid" id="countersGrid">
+            <!-- カウンターアイテムはJavaScriptで生成 -->
         </div>
+
+        <button class="reset-button" onclick="resetAll()">リセット</button>
     </div>
 
     <script>
@@ -306,13 +379,12 @@
             roles.forEach(role => {
                 const counterItem = document.createElement('div');
                 counterItem.className = 'counter-item';
-                counterItem.id = `item-${role}`;
                 counterItem.innerHTML = `
                     <div class="counter-header">
                         <span class="counter-name">${role}</span>
                         <span class="counter-value" id="count-${role}">0</span>
                     </div>
-                    <div class="counter-probability" id="prob-${role}">1/0</div>
+                    <div class="counter-probability" id="prob-${role}">確率: 1/0</div>
                     <div class="counter-buttons">
                         <button class="btn-add" onclick="increment('${role}')">+1</button>
                         <button class="btn-subtract" onclick="decrement('${role}')">-1</button>
@@ -322,25 +394,9 @@
             });
         }
 
-        // ハイライトエフェクト
-        function highlightCounter(role) {
-            const item = document.getElementById(`item-${role}`);
-            item.classList.add('highlighted');
-
-            // バイブレーション（スマホのみ）
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-
-            setTimeout(() => {
-                item.classList.remove('highlighted');
-            }, 200);
-        }
-
         // カウントを増やす
         function increment(role) {
             counters[role]++;
-            highlightCounter(role);
             updateDisplay();
             saveToLocalStorage();
         }
@@ -349,7 +405,6 @@
         function decrement(role) {
             if (counters[role] > 0) {
                 counters[role]--;
-                highlightCounter(role);
                 updateDisplay();
                 saveToLocalStorage();
             }
@@ -381,7 +436,7 @@
                 } else if (totalGames > 0) {
                     probability = `1/${totalGames}`;
                 }
-                document.getElementById(`prob-${role}`).textContent = probability;
+                document.getElementById(`prob-${role}`).textContent = `確率: ${probability}`;
             });
         }
 
